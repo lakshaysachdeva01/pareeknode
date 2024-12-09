@@ -1,0 +1,66 @@
+<body>
+    <section id="home-testimonials">
+        <div id="test-container">
+            <div class="test-head">
+                <h6><i class="flaticon-roof"></i> Testimonials</h6>
+                <h2>Impressive</h2>
+                <p>Words from Customers</p>
+            </div>
+            <div class="testimonial-carousel owl-carousel owl-theme">
+                <% testimonial.forEach((slide) => { %>
+                    <div class="testimonial">
+                        <div class="test-box">
+                            <div class="test-image">
+                                <img 
+                                    src="<%= process.env.S3_BASE_URL + slide.image %>" 
+                                    alt="<%= slide.name %>" 
+                                />
+                                <i class="flaticon-writer"></i>
+                            </div>
+                            <div class="testimonial-text">
+                                <p class="review"><%= slide.review %></p>
+                                <h3 class="name"><%= slide.name %></h3>
+                                <p class="profile"><%= slide.companyProfile %></p>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        function initializeCarousel() {
+            $(".testimonial-carousel").owlCarousel({
+                loop: true,
+                margin: 30,
+                nav: true,
+                dots: true,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                autoplayHoverPause: true,
+                responsive: {
+                    0: { items: 1 }, 
+                    864: { items: 1 }, 
+                    900: {items:2},
+                    1024: { items: 2 }, 
+                    1230: { items: 3 },
+                    1496: { items: 3 }
+                }
+            });
+        }
+    
+        $(document).ready(function () {
+            initializeCarousel();
+        });
+    </script>
+    
+
+<script src="assets1/js/script.js"></script>
+<script src="assets1/js/jquery.js"></script>
+  <script src="assets1/js/owl.js"></script>
+</body>
+
+
+
+

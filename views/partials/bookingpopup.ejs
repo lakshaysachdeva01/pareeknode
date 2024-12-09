@@ -1,0 +1,110 @@
+<button type="button" class="booksite" id="bookSiteButton" onclick="openBanner()">Book free site visit</button>
+<div class="vist-modal">
+    <div class="visit-banner" id="visitBanner">
+        <span class="close-btn" onclick="closeBanner()">&times;</span>
+        <div class="career-title">
+            <h2>Book a Consultation with Us</h2>
+            <p>Experience our expert assessment, consulting, and paint solutions. Schedule a meeting now.</p>
+        </div>
+        <form id="visitform">
+        
+                <div class="deal-group">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="name" placeholder="Your name" name="<%= POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS.name %>" class="car-input" required>
+                </div>
+                <div class="deal-group">
+                    <i class="fa-solid fa-headset"></i>
+                    <input type="tel" id="phone" placeholder="Phone No." name="<%= POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS.phone %>" class="car-input" required>
+                </div>
+            
+         
+                <div class="deal-group">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="email" placeholder="Email ID" name="<%= POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS.email %>" class="car-input" required>
+                </div>
+                <div class="deal-group designation">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="designation" name="<%= POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS.designation %>" placeholder="Your Profile/Designation" class="car-input" required>
+                </div>
+           
+            
+                <div class="deal-group resume">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <input type="text"  name="<%= POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks %>" class="car-input" placeholder="Message" style="position: relative;" required>
+                </div>
+          
+            <div class="deal-group" style="display: none;">
+                <input type="hidden" id="websiteProjectId" name="websiteProjectId" value="66e2db81cb3d9f4f044cfc54">
+            </div>
+            <div class="button-container">
+                <div class="g-recaptcha" data-sitekey="6LddcpEqAAAAAHphoB_Wk6RcBSUvLIckyp4EtLfi"></div>
+                <button type="submit" class="swipe-gradient-button"><span>Book For Inspection <i class="flaticon-login"></i></span></button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById('visitform').addEventListener('submit', async function (e) {
+        // function handleSubmit(e) {   
+       e.preventDefault();  // Prevent the default form submission
+             try {
+                event.preventDefault();
+                const API_BASE_URL= "<%= API_BASE_URL %>";
+               
+                 const websiteID = "<%= websiteID %>";
+                const WEBSITEIDKEY = "<%= WEBSITE_ID_KEY %>";
+               
+                 const POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS = <%- JSON.stringify(POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS) %>;
+             
+                 const CREATE_POPUP_ENQUIRY_END_POINT = `${API_BASE_URL}/website/service-enquiry/create-service-enquiry`;
+                 // console.log("SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS=", SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL);
+                 //const CREATE_CAREER_ENQUIRY_END_POINT = `${API_BASE_URL}/website/career-enquiry/create-career-enquiry`; 
+                const visitform = event.target; 
+                const WEBSITE_ID_KEY = WEBSITEIDKEY;
+                //--------------------------------------------------------------------------------------------------------------------------------------
+                const payload = {
+                    [POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS.name]: visitform.querySelector(
+                        `input[name="${POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS.name}"]`
+                    ).value,
+                    [POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS.phone]:
+                    visitform.querySelector(
+                            `input[name="${POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS.phone}"]`
+                        ).value,
+                    [POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS.email]: visitform.querySelector(
+                        `input[name="${POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS.email}"]`
+                    ).value,
+                    [POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS.designation]: visitform.querySelector(
+                        `input[name="${POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS.designation}"]`
+                    ).value, 
+                    [POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks]: visitform.querySelector(
+                        `input[name="${POPUP_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks}"]`
+                    ).value, 
+                    [WEBSITE_ID_KEY]: websiteID,
+                };
+    
+                const headers = new Headers({
+                    "Content-Type": "application/json",
+                }); 
+                const response = await fetch(CREATE_POPUP_ENQUIRY_END_POINT, {
+                    method: "POST",
+                    headers,
+                    body: JSON.stringify(payload),
+                });
+    
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+    
+                const data = await response.json();
+    
+                alert("Form submitted successfully!");
+    
+                visitform.reset();
+             } catch (error) {
+               alert("Form not submitted!"); 
+    
+               console.error("Form submission error", error);
+             } 
+        });
+    
+</script>
