@@ -3745,9 +3745,8 @@ gap: 100px;
 }
 
 .enquire-button{
-  position: absolute;
   height: 55px;
-  width: 500px;
+  width: 100%;
   font-size: 20px;
   border-radius: 8px;
   font-family: roboto;
@@ -3756,6 +3755,10 @@ gap: 100px;
   text-align: center;
   align-content: center;
   font-weight: 500;
+ 
+}
+.proddetimage{
+  margin: 15px;
 }
 
 
